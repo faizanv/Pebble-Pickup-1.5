@@ -260,7 +260,7 @@ Server.prototype.connect = function(db, _options, callback) {
     // Set up listeners
     self.s.server.once('timeout', errorHandler('timeout'));
     self.s.server.once('error', errorHandler('error'));
-    self.s.server.once('close', errorHandler('close'));
+    self.s.server.on('close', errorHandler('close'));
     // Only called on destroy
     self.s.server.once('destroy', destroyHandler);
 
@@ -297,6 +297,7 @@ Server.prototype.connect = function(db, _options, callback) {
 // Server capabilities
 Server.prototype.capabilities = function() {
   if(this.s.sCapabilities) return this.s.sCapabilities;
+  if(this.s.server.lastIsMaster() == null) throw new MongoError('cannot establish topology capabilities as driver is still in process of connecting');
   this.s.sCapabilities = new ServerCapabilities(this.s.server.lastIsMaster());
   return this.s.sCapabilities;
 }

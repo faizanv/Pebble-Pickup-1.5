@@ -11,7 +11,6 @@ var inherits = require('util').inherits
   , ReadPreference = require('./read_preference')
   , MongoError = require('mongodb-core').MongoError
   , Readable = require('stream').Readable || require('readable-stream').Readable
-  // , CoreCursor = require('mongodb-core').Cursor
   , CoreCursor = require('./cursor')
   , Query = require('mongodb-core').Query
   , CoreReadPreference = require('mongodb-core').ReadPreference;
@@ -19,9 +18,9 @@ var inherits = require('util').inherits
 /**
  * @fileOverview The **AggregationCursor** class is an internal class that embodies an aggregation cursor on MongoDB
  * allowing for iteration over the results returned from the underlying query. It supports
- * one by one document iteration, conversion to an array or can be iterated as a Node 0.10.X 
+ * one by one document iteration, conversion to an array or can be iterated as a Node 0.10.X
  * or higher stream
- * 
+ *
  * **AGGREGATIONCURSOR Cannot directly be instantiated**
  * @example
  * var MongoClient = require('mongodb').MongoClient,
@@ -37,7 +36,7 @@ var inherits = require('util').inherits
  *     , {a:2, b:2}, {a:3, b:3}
  *     , {a:4, b:4}], {w:1}, function(err, result) {
  *     test.equal(null, err);
- * 
+ *
  *     // Show that duplicate records got dropped
  *     col.aggregation({}, {cursor: {}}).toArray(function(err, items) {
  *       test.equal(null, err);
@@ -55,7 +54,7 @@ var inherits = require('util').inherits
 
 /**
  * Creates a new Aggregation Cursor instance (INTERNAL TYPE, do not instantiate directly)
- * @class
+ * @class AggregationCursor
  * @extends external:Readable
  * @fires AggregationCursor#data
  * @fires AggregationCursor#end
@@ -126,11 +125,8 @@ var AggregationCursor = function(bson, ns, cmd, options, topology, topologyOptio
  * @type {null}
  */
 
-// // Extend the Cursor
-// inherits(AggregationCursor, CoreCursor);
-
 // Inherit from Readable
-inherits(AggregationCursor, Readable);  
+inherits(AggregationCursor, Readable);
 
 // Extend the Cursor
 for(var name in CoreCursor.prototype) {
@@ -338,17 +334,17 @@ AggregationCursor.prototype.get = AggregationCursor.prototype.toArray;
  */
 
 /**
- * Close the cursor, sending a KillCursor command and emitting close.
+ * Close the cursor, sending a AggregationCursor command and emitting close.
  * @method AggregationCursor.prototype.close
  * @param {AggregationCursor~resultCallback} [callback] The result callback.
  * @return {null}
- */   
+ */
 
 /**
  * Is the cursor closed
  * @method AggregationCursor.prototype.isClosed
  * @return {boolean}
- */   
+ */
 
 /**
  * Execute the explain for the cursor
@@ -361,13 +357,13 @@ AggregationCursor.prototype.get = AggregationCursor.prototype.toArray;
  * Clone the cursor
  * @function AggregationCursor.prototype.clone
  * @return {AggregationCursor}
- */     
+ */
 
 /**
  * Resets the cursor
  * @function AggregationCursor.prototype.rewind
  * @return {AggregationCursor}
- */  
+ */
 
 /**
  * The callback format for the forEach iterator method
