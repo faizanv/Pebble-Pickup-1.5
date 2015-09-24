@@ -30,4 +30,13 @@ router.post('/', function(req, res, next) {
   });
 });
 
+//Delete - DEL
+  router.delete('/:id', function(req, res, next) {
+      db.remove({_id:req.params.id}, function (error, data) {
+          console.log("This is a delete " + data);
+          res.send("Tweet has been deleted");
+          res.status(200).end();
+      });
+  });
+
 module.exports = router;

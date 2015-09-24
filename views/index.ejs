@@ -4,9 +4,49 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
-  <body>
+  <body id='body'>
     <h1><%= title %></h1>
-    <p>Welcome to the <%= title %></p>
-    <p>This shit will work eventually</p>
+    <p>Keep in mind the API refers to pickup lines as tweets</p>
+    <div>
+      <h2>API Methods</h2>
+      <p><strong>/tweets : </strong>Returns array of pickup line JSON objects</p>
+      <p><strong>/tweets/random : </strong>Returns JSON representation of a random pickup line</p>
+    </div>
+
+    <div>
+      <h2>Submit A Pickup Line</h2>
+      <form action="javascript:console.log( 'success!' );">
+        <p>Pickup Line: <input type="text"></p>
+        <input type="submit">
+      </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $("form").submit(function(e) {
+          if ($( "input:first" ).val() === "") {
+            e.preventDefault();
+            return;
+          }
+          var line = $( "input:first" ).val();
+          $( "input:first" ).val("");
+          var data =
+          {
+            "username": "@faizan_44",
+            "tweet": line
+          }
+          $.ajax({
+            "url": "/tweets",
+            "type": "post",
+            "data": data,
+            "success": function(e) {
+              console.log("Line posted");
+            }
+          });
+
+        });
+      });
+    </script>
   </body>
 </html>

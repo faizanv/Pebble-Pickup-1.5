@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+div {
+  margin-top: 10%;
+}
+
+h2 {
+  text-decoration: underline;
+}
