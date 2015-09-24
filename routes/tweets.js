@@ -4,6 +4,13 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var db = require('../models/tweet.js');
 
+
+router.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 /* GET /todos listing. */
 router.get('/', function(req, res, next) {
   db.find(function (err, tweet) {
