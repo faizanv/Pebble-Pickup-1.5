@@ -15,7 +15,7 @@ mongoose.connect('mongodb://user:password@ds034208.mongolab.com:34208/ppickup', 
 });
 
 var routes = require('./routes/index');
-var users = require('./routes/tweets');
+var tweets = require('./routes/tweets');
 var port = process.env.PORT || 8000;
 
 
@@ -36,7 +36,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/tweets', users);
+app.use('/tweets', tweets);
 
 app.listen(port);
 console.log("App listening on "+port)
